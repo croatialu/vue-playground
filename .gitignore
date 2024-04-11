@@ -8,4 +8,6 @@ node_modules
 .idea/
 *.log
 .tsbuildinfo
-.env
+
+docs/.vitepress/dist
+docs/.vitepress/cache

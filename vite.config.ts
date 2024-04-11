@@ -12,7 +12,7 @@ import { VueRouterAutoImports } from 'unplugin-vue-router'
 import JSX from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig({
-  base: '/vitesse-lite-bun',
+  base: '/vue-playground',
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,

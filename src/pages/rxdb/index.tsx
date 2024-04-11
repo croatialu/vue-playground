@@ -1,8 +1,18 @@
+import { createDatabase } from './client-db/db'
+import { useRxDBInitializer } from './vue-rxdb'
+
 const Page = defineComponent({
   setup() {
+    useRxDBInitializer(() => {
+      return createDatabase()
+    })
+
     return () => {
       return (
-        <div>123</div>
+        <div>
+
+          233
+        </div>
       )
     }
   },
