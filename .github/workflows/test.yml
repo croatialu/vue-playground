@@ -1,0 +1,70 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: oven-sh/setup-bun@v1
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            .tsbuildinfo
+          key: ${{ runner.os }}-node-${{ hashFiles('**/bun.lockb') }}
+
+      - name: Install
+        run: bun install
+
+      - name: Test
+        run: bun run test
+
+      - name: Lint
+        run: bun run lint
+
+      - name: TypeCheck
+        run: bun run typecheck
+
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs: lint
+    env:
+      VITE_BASE_URL: ${{ vars.VITE_BASE_URL }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: oven-sh/setup-bun@v1
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            .tsbuildinfo
+          key: ${{ runner.os }}-node-${{ hashFiles('**/bun.lockb') }}
+
+      - name: Install
+        run: bun install
+
+      - name: Build
+        run: bun run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
