@@ -40,6 +40,18 @@ export async function createDatabase() {
 
   })
 
+  const query1 = database.collections.users.find({
+    selector: {
+      name: 'Alice',
+    },
+    sort: [
+      {
+        name: 'asc',
+      },
+    ],
+  })
+  const query2 = database.collections.users.findOne({})
+
   return database
 }
 

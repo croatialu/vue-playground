@@ -36,6 +36,7 @@ export default defineConfig({
     // https://github.com/posva/unplugin-vue-router
     VueRouter({
       extensions: ['.vue', '.tsx'],
+      exclude: ['**/components/**'],
     }),
 
     // https://github.com/antfu/unplugin-auto-import
